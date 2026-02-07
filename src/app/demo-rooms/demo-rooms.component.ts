@@ -12,28 +12,33 @@ export class DemoRoomsComponent {
     demoRooms = [
         {
             id: 1,
-            imageUrl: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-            title: 'Modern Apartment'
+            imageUrl: 'https://images.unsplash.com/photo-1555854877-bab0e564b8d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+            title: 'Available PG'
         },
         {
             id: 2,
-            imageUrl: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-            title: 'Cozy Studio'
+            imageUrl: 'https://images.unsplash.com/photo-1540306126605-726487930514?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+            title: 'Twin Sharing'
         },
         {
             id: 3,
-            imageUrl: 'https://images.unsplash.com/photo-1493809842364-78817add7ffb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-            title: 'Shared flat'
+            imageUrl: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+            title: 'Single Room'
         },
         {
             id: 4,
-            imageUrl: 'https://images.unsplash.com/photo-1484154218962-a1c002085d2f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-            title: 'Private Room'
+            imageUrl: 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+            title: 'Student Bed'
         },
         {
             id: 5,
-            imageUrl: 'https://images.unsplash.com/photo-1556020685-ae41abfc9365?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-            title: 'Luxury PG'
+            imageUrl: 'https://images.unsplash.com/photo-1595428774223-ef52624120d2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+            title: 'Shared Space'
+        },
+        {
+            id: 6,
+            imageUrl: 'https://images.unsplash.com/photo-1595853035070-59a39fe84de3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+            title: 'Compact PG'
         }
     ];
 }
