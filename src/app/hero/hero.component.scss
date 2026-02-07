@@ -1,0 +1,152 @@
+$primary-color: #007bff;
+$primary-hover: #0069d9;
+$text-color: #333;
+$text-muted: #666;
+$bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+$card-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+
+.hero-section {
+    background: $bg-gradient;
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 1.5rem;
+    text-align: center;
+}
+
+.hero-content {
+    max-width: 900px;
+    width: 100%;
+}
+
+.hero-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: $text-color;
+    margin-bottom: 1rem;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+
+    @media (min-width: 768px) {
+        font-size: 3.5rem;
+    }
+}
+
+.hero-description {
+    font-size: 1.1rem;
+    color: $text-muted;
+    margin-bottom: 3rem;
+    font-weight: 500;
+
+    @media (min-width: 768px) {
+        font-size: 1.25rem;
+    }
+}
+
+.search-container {
+    background: white;
+    border-radius: 12px; // Rounded container
+    padding: 1.5rem;
+    box-shadow: $card-shadow;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
+    @media (min-width: 900px) {
+        flex-direction: row;
+        align-items: center;
+        padding: 1rem;
+        gap: 0;
+        border-radius: 50px; // Pill shape on desktop
+    }
+}
+
+.search-input-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex: 1;
+    padding: 0 1rem;
+
+    // Make inputs take full width on mobile
+    width: 100%;
+
+    .search-label {
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: $text-muted;
+        margin-bottom: 0.25rem;
+        letter-spacing: 0.5px;
+        padding-left: 4px;
+    }
+
+    .form-control {
+        width: 100%;
+        border: none;
+        background: transparent;
+        font-size: 1rem;
+        font-weight: 600;
+        color: $text-color;
+        padding: 0.5rem 0;
+
+        &:focus {
+            outline: none;
+        }
+
+        &::placeholder {
+            color: #aaa;
+            font-weight: 400;
+        }
+    }
+
+    // Hide default select arrow for custom look if needed, 
+    // but for now keeping it simple or system default.
+    select {
+        cursor: pointer;
+    }
+}
+
+.divider {
+    display: none;
+
+    @media (min-width: 900px) {
+        display: block;
+        width: 1px;
+        height: 40px;
+        background-color: #e0e0e0;
+        margin: 0 0.5rem;
+    }
+}
+
+.btn-search {
+    background-color: $primary-color;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    width: 100%; // Full width on mobile
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 6px rgba(0, 123, 255, 0.2);
+
+    @media (min-width: 900px) {
+        width: auto;
+        border-radius: 40px; // Pill shape button on desktop to match container
+        padding: 1rem 2.5rem;
+        margin-left: 0.5rem;
+    }
+
+    &:hover {
+        background-color: $primary-hover;
+        transform: translateY(-1px);
+        box-shadow: 0 6px 12px rgba(0, 123, 255, 0.3);
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
+}

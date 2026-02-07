@@ -1,0 +1,80 @@
+$nav-bg: #f8f9fa;
+$nav-border: #e9ecef;
+$text-color: #495057;
+$hover-color: #007bff;
+$active-color: #0056b3;
+$primary-highlight: #007bff;
+$primary-text: #ffffff;
+
+.secondary-nav {
+    background-color: $nav-bg;
+    border-bottom: 1px solid $nav-border;
+    padding: 0;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    /* smooth scrolling on iOS */
+
+    /* Hide scrollbar but keep functionality */
+    scrollbar-width: none;
+
+    /* Firefox */
+    &::-webkit-scrollbar {
+        display: none;
+        /* Chrome, Safari, Opera */
+    }
+
+    .nav-list {
+        display: flex;
+        justify-content: flex-start;
+        /* Ensure items start from left on mobile */
+        align-items: center;
+        list-style: none;
+        margin: 0;
+        padding: 0 1rem;
+        white-space: nowrap;
+        /* Prevent wrapping */
+
+        @media (min-width: 768px) {
+            justify-content: center;
+            /* Center on desktop */
+            padding: 0;
+        }
+    }
+
+    .nav-item {
+        margin: 0;
+    }
+
+    .nav-link {
+        display: block;
+        padding: 0.75rem 1.25rem;
+        color: $text-color;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 0.95rem;
+        transition: all 0.2s ease;
+        border-bottom: 2px solid transparent;
+
+        &:hover {
+            color: $hover-color;
+            background-color: rgba(0, 0, 0, 0.02);
+        }
+
+        &:active,
+        &.active {
+            color: $active-color;
+            border-bottom-color: $active-color;
+        }
+
+        /* Style for the primary highlighted item */
+        &.primary {
+            color: $primary-highlight;
+            font-weight: 700;
+
+            &:hover {
+                background-color: rgba(0, 123, 255, 0.08);
+            }
+        }
+    }
+}

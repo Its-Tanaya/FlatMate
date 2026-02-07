@@ -1,0 +1,48 @@
+<header class="header">
+    <div class="container">
+        <div class="logo">
+            <span class="logo-text">FLATMATE</span>
+        </div>
+
+
+
+        <!-- Desktop Actions -->
+        <div class="actions">
+            <a href="#" class="nav-link user-login">User Login</a>
+
+            <ng-container *ngIf="!isOwnerLoggedIn; else ownerDashboard">
+                <button class="btn btn-owner-login" (click)="login()">Owner Login</button>
+
+            </ng-container>
+
+            <ng-template #ownerDashboard>
+                <button class="btn btn-dashboard">Dashboard</button>
+                <button class="btn btn-logout" (click)="logout()">Logout</button>
+            </ng-template>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <button class="mobile-menu-btn" (click)="toggleMobileMenu()" [class.active]="isMobileMenuOpen">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" [class.open]="isMobileMenuOpen">
+
+
+        <a href="#" class="mobile-link" (click)="toggleMobileMenu()">User Login</a>
+
+        <ng-container *ngIf="!isOwnerLoggedIn; else mobileOwnerDashboard">
+            <button class="btn btn-owner-login" (click)="login(); toggleMobileMenu()">Owner Login</button>
+
+        </ng-container>
+
+        <ng-template #mobileOwnerDashboard>
+            <button class="btn btn-dashboard" (click)="toggleMobileMenu()">Dashboard</button>
+            <button class="btn btn-logout" (click)="logout(); toggleMobileMenu()">Logout</button>
+        </ng-template>
+    </div>
+</header>

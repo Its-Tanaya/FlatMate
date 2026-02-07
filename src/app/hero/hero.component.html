@@ -1,0 +1,43 @@
+<section class="hero-section">
+    <div class="hero-content">
+        <h1 class="hero-title">Find Rooms & PGs Near You</h1>
+        <p class="hero-description">Verified residential rooms from local house owners</p>
+
+        <div class="search-container">
+            <div class="search-input-group">
+                <label for="location" class="search-label">Location</label>
+                <input type="text" id="location" placeholder="Enter city or locality" [(ngModel)]="searchQuery.location"
+                    class="form-control">
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="search-input-group">
+                <label for="roomType" class="search-label">Room Type</label>
+                <select id="roomType" [(ngModel)]="searchQuery.roomType" class="form-control">
+                    <option value="" disabled selected>Select Type</option>
+                    <option value="room">Private Room</option>
+                    <option value="pg">PG / Hostel</option>
+                    <option value="shared">Shared Flat</option>
+                </select>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="search-input-group">
+                <label for="rentRange" class="search-label">Rent Range</label>
+                <select id="rentRange" [(ngModel)]="searchQuery.rentRange" class="form-control">
+                    <option value="" disabled selected>Budget</option>
+                    <option value="0-5000">Below ₹5,000</option>
+                    <option value="5000-10000">₹5,000 - ₹10,000</option>
+                    <option value="10000-20000">₹10,000 - ₹20,000</option>
+                    <option value="20000+">Above ₹20,000</option>
+                </select>
+            </div>
+
+            <button class="btn-search" (click)="onSearch()">
+                Search
+            </button>
+        </div>
+    </div>
+</section>

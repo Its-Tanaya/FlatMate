@@ -1,0 +1,7 @@
+<nav class="secondary-nav">
+    <ul class="nav-list">
+        <li *ngFor="let item of navItems" class="nav-item">
+            <a [href]="item.link" class="nav-link" [class.primary]="item.isPrimary">{{ item.label }}</a>
+        </li>
+    </ul>
+</nav>
