@@ -4,11 +4,12 @@ import { HeaderComponent } from './header/header.component';
 import { HeroComponent } from './hero/hero.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { DemoRoomsComponent } from './demo-rooms/demo-rooms.component';
+import { FooterComponent } from './footer/footer.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent, HeroComponent, NavBarComponent, DemoRoomsComponent],
+  imports: [RouterOutlet, HeaderComponent, HeroComponent, NavBarComponent, DemoRoomsComponent, FooterComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
