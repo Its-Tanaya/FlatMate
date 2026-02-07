@@ -1,17 +1,29 @@
 <section class="demo-rooms-section">
     <div class="container">
         <h2 class="section-title">Recommended for You</h2>
-        <div class="product-grid">
+
+        <div *ngIf="isLoading" class="loading-state">
+            <div class="spinner"></div>
+            <p>Loading best rooms for you...</p>
+        </div>
+
+        <div *ngIf="error" class="error-state">
+            <p>{{ error }}</p>
+            <button (click)="fetchRooms()" class="retry-btn">Retry</button>
+        </div>
+
+        <div class="product-grid" *ngIf="!isLoading && !error">
             <div *ngFor="let room of demoRooms" class="product-card" (click)="openDetails(room)">
                 <div class="image-container">
-                    <img [src]="room.imageUrl" [alt]="room.title" class="product-image">
-                    <span *ngIf="room.verified" class="badge-verified">Verified</span>
+                    <img [src]="getMainImage(room)" [alt]="room.houseAddress" class="product-image"
+                        onerror="this.src='https://placehold.co/600x400?text=No+Image'">
+                    <span *ngIf="room.houseProofVerified" class="badge-verified">Verified</span>
                 </div>
                 <div class="product-details">
-                    <h3 class="product-title">{{ room.title }}</h3>
+                    <h3 class="product-title">{{ room.houseType }} ({{ room.roomSharingType }})</h3>
                     <div class="product-rating">
                         <span class="stars">★★★★☆</span>
-                        <span class="rating-count">{{ room.reviews }}</span>
+                        <span class="rating-count">({{ room.reviews || 12 }} reviews)</span>
                     </div>
                     <div class="product-price">
                         <span class="currency">₹</span>
@@ -19,10 +31,10 @@
                         <span class="period">/mo</span>
                     </div>
                     <div class="product-meta">
-                        <span class="meta-item">{{ room.type }}</span> •
-                        <span class="meta-item">{{ room.furnishing }}</span>
+                        <span class="meta-item">{{ room.roomType }}</span> •
+                        <span class="meta-item">{{ room.furnishingType }}</span>
                     </div>
-                    <p class="product-location">📍 {{ room.location }}</p>
+                    <p class="product-location">📍 {{ room.houseAddress | titlecase }}</p>
                     <p class="delivery-info">Available immediately</p>
                     <button class="btn-view-details">See Details</button>
                 </div>
@@ -37,15 +49,25 @@
         <button class="close-btn" (click)="closeDetails()">&times;</button>
         <div class="modal-body">
             <div class="modal-image-col">
-                <img [src]="selectedRoom.imageUrl" [alt]="selectedRoom.title" class="modal-main-image">
+                <img [src]="currentMainImage" [alt]="selectedRoom.houseType" class="modal-main-image"
+                    onerror="this.src='https://placehold.co/600x400?text=No+Image'">
+
+                <!-- Image Gallery Thumbs -->
+                <div class="image-gallery" *ngIf="selectedRoom.imageUrls && selectedRoom.imageUrls.length > 1">
+                    <div *ngFor="let img of selectedRoom.imageUrls" class="thumb"
+                        [class.active]="currentMainImage === img" (click)="setMainModalImage(img)">
+                        <img [src]="img" alt="Room view" onerror="this.src='https://placehold.co/100x100?text=No+Img'">
+                    </div>
+                </div>
             </div>
+
             <div class="modal-info-col">
-                <h2 class="modal-title">{{ selectedRoom.title }}</h2>
-                <p class="modal-location">{{ selectedRoom.location }}</p>
+                <h2 class="modal-title">{{ selectedRoom.houseType }} ({{ selectedRoom.roomSharingType }})</h2>
+                <p class="modal-location">📍 {{ selectedRoom.houseAddress }} - {{ selectedRoom.pinCode }}</p>
 
                 <div class="modal-rating">
                     <span class="stars">★★★★☆</span>
-                    <span>{{ selectedRoom.rating }} out of 5</span>
+                    <span>{{ selectedRoom.rating || 4.5 }} out of 5</span>
                 </div>
 
                 <div class="modal-price-box">
@@ -54,9 +76,9 @@
                 </div>
 
                 <div class="detail-badges">
-                    <span class="badge">{{ selectedRoom.type }}</span>
-                    <span class="badge">{{ selectedRoom.furnishing }}</span>
-                    <span class="badge" *ngIf="selectedRoom.verified">Verified Owner</span>
+                    <span class="badge">{{ selectedRoom.roomType }}</span>
+                    <span class="badge">{{ selectedRoom.furnishingType }}</span>
+                    <span class="badge" *ngIf="selectedRoom.houseProofVerified">Verified Owner</span>
                 </div>
 
                 <hr class="divider">
@@ -64,6 +86,12 @@
                 <div class="modal-description">
                     <h3>About this place</h3>
                     <p>{{ selectedRoom.description }}</p>
+
+                    <h3 *ngIf="selectedRoom.nearbyPlaces" class="mt-4">Nearby Places</h3>
+                    <p *ngIf="selectedRoom.nearbyPlaces">{{ selectedRoom.nearbyPlaces }}</p>
+
+                    <h3 *ngIf="selectedRoom.rulesAndBenefits" class="mt-4">Rules & Benefits</h3>
+                    <p *ngIf="selectedRoom.rulesAndBenefits">{{ selectedRoom.rulesAndBenefits }}</p>
                 </div>
 
                 <div class="modal-actions">

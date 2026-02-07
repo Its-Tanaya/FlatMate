@@ -1,104 +1,136 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { RoomService, Room } from '../services/room.service';
 
 @Component({
     selector: 'app-demo-rooms',
     standalone: true,
     imports: [CommonModule],
     templateUrl: './demo-rooms.component.html',
-    styleUrl: './demo-rooms.component.scss'
+    styleUrl: './demo-rooms.component.scss',
+    providers: [RoomService]
 })
-export class DemoRoomsComponent {
-    selectedRoom: any = null;
+export class DemoRoomsComponent implements OnInit {
+    /**
+     * @description
+     * The `demoRooms` array stores the list of room objects fetched from the API.
+     * It is initialized as an empty array and populated in `ngOnInit`.
+     * The `Room` interface is defined in the `room.service.ts` file.
+     */
+    demoRooms: Room[] = [];
+    selectedRoom: Room | null = null;
+    isLoading = true;
+    error: string | null = null;
+    currentMainImage: string = '';
 
-    demoRooms = [
-        {
-            id: 1,
-            imageUrl: 'https://images.unsplash.com/photo-1555854877-bab0e564b8d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-            title: 'Spacious 2BHK near Station',
-            location: 'Andheri West, Mumbai',
-            price: 25000,
-            rating: 4.5,
-            reviews: 120,
-            type: '2-BHK',
-            furnishing: 'Fully Furnished',
-            verified: true,
-            description: 'A beautiful 2BHK apartment located just 5 minutes from the station. Fully furnished with AC, WiFi, and modern amenities. Ideal for working professionals or small families.'
-        },
-        {
-            id: 2,
-            imageUrl: 'https://images.unsplash.com/photo-1540306126605-726487930514?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-            title: 'Modern Studio Apartment',
-            location: 'Bandra, Mumbai',
-            price: 18000,
-            rating: 4.2,
-            reviews: 85,
-            type: '1-RK',
-            furnishing: 'Semi Furnished',
-            verified: true,
-            description: 'Cozy studio apartment in the heart of Bandra. Close to cafes and nightlife. Perfect for singles.'
-        },
-        {
-            id: 3,
-            imageUrl: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-            title: 'Luxury 3BHK Penthouse',
-            location: 'Juhu, Mumbai',
-            price: 60000,
-            rating: 4.8,
-            reviews: 200,
-            type: '3-BHK',
-            furnishing: 'Fully Furnished',
-            verified: true,
-            description: 'Exquisite penthouse with sea view. Includes gym access, swimming pool, and 24/7 security.'
-        },
-        {
-            id: 4,
-            imageUrl: 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-            title: 'Budget Friendly PG',
-            location: 'Goregaon East, Mumbai',
-            price: 8000,
-            rating: 4.0,
-            reviews: 340,
-            type: 'PG',
-            furnishing: 'Basic',
-            verified: false,
-            description: 'Affordable PG accommodation for students. Includes daily meals and housekeeping.'
-        },
-        {
-            id: 5,
-            imageUrl: 'https://images.unsplash.com/photo-1595428774223-ef52624120d2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-            title: 'Co-living Space for Techies',
-            location: 'Powai, Mumbai',
-            price: 15000,
-            rating: 4.6,
-            reviews: 150,
-            type: 'Shared',
-            furnishing: 'Fully Furnished',
-            verified: true,
-            description: 'Vibrant co-living community in Powai. High-speed internet, gaming zone, and weekly events included.'
-        },
-        {
-            id: 6,
-            imageUrl: 'https://images.unsplash.com/photo-1595853035070-59a39fe84de3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-            title: 'Single Room with Balcony',
-            location: 'Malad West, Mumbai',
-            price: 12000,
-            rating: 4.3,
-            reviews: 95,
-            type: '1-BHK',
-            furnishing: 'Unfurnished',
-            verified: true,
-            description: 'Airy single room with a large balcony. Quiet neighborhood, close to parks and schools.'
+    constructor(
+        private roomService: RoomService,
+        @Inject(PLATFORM_ID) private platformId: Object
+    ) { }
+
+    ngOnInit(): void {
+        if (isPlatformBrowser(this.platformId)) {
+            this.fetchRooms();
         }
-    ];
+    }
 
-    openDetails(room: any) {
+    /**
+     * @description
+     * Fetches the room data from the `RoomService`.
+     * While fetching, `isLoading` is set to `true`.
+     * If successful, `demoRooms` is updated.
+     * If failed, `error` is set to display an error message.
+     */
+    fetchRooms() {
+        this.isLoading = true;
+        this.roomService.getRooms().subscribe({
+            next: (data) => {
+                console.log('Fetched Rooms Data:', data);
+                // Map API data to UI structure
+                this.demoRooms = data.map(room => ({
+                    ...room,
+                    // Ensure image logic
+                    imageUrls: room.imageUrls || room.images || (room.imageUrl ? [room.imageUrl] : []),
+                    // Mock UI fields since API misses them
+                    rating: room.rating || 4.5,
+                    reviews: room.reviews || Math.floor(Math.random() * 50) + 10
+                }));
+                this.isLoading = false;
+            },
+            error: (err) => {
+                console.error('Error fetching rooms:', err);
+                this.error = 'Failed to load rooms. Please try again later.';
+                this.isLoading = false;
+            }
+        });
+    }
+
+    /**
+     * @description
+     * Gets the main image URL for a room card.
+     * Prioritizes the first image in an array, then falls back to `imageUrl`.
+     * @param room The room object
+     * @returns The URL string or a placeholder if none found.
+     */
+    getMainImage(room: Room): string {
+        const placeholder = 'https://placehold.co/600x400?text=No+Image';
+        let img = placeholder;
+
+        if (room.imageUrls && room.imageUrls.length > 0) {
+            img = room.imageUrls[0];
+        } else if (room.imageUrl) {
+            img = room.imageUrl;
+        } else if (room.images && room.images.length > 0) {
+            img = room.images[0];
+        }
+
+        // Return placeholder if still the default
+        if (img === placeholder) return img;
+
+        // Validation: Must have a valid image extension (basic check)
+        if (!img.match(/\.(jpeg|jpg|gif|png|webp|bmp)$/i) && !img.startsWith('data:image') && !img.startsWith('http')) {
+            return placeholder;
+        }
+
+        // Normalization: If it's a raw filename (no path, no https), assume it's in assets/HouseImg
+        if (!img.startsWith('http') && !img.startsWith('assets/') && !img.startsWith('/')) {
+            return `assets/HouseImg/${img}`;
+        }
+
+        return img;
+    }
+
+    openDetails(room: Room) {
         this.selectedRoom = room;
-        document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+        // set initial main image for modal
+        this.currentMainImage = this.getMainImage(room);
+        document.body.style.overflow = 'hidden';
     }
 
     closeDetails() {
         this.selectedRoom = null;
-        document.body.style.overflow = 'auto'; // Restore scrolling
+        document.body.style.overflow = 'auto';
+    }
+
+    /**
+     * @description
+     * Updates the main image displayed in the modal based on thumbnail click.
+     * @param imgUrl The URL of the clicked thumbnail
+     */
+    setMainModalImage(imgUrl: string) {
+        const placeholder = 'https://placehold.co/600x400?text=No+Image';
+        if (!imgUrl) return;
+
+        // Same validation/normalization
+        if (!imgUrl.match(/\.(jpeg|jpg|gif|png|webp|bmp)$/i) && !imgUrl.startsWith('data:image') && !imgUrl.startsWith('http')) {
+            this.currentMainImage = placeholder;
+            return;
+        }
+
+        if (!imgUrl.startsWith('http') && !imgUrl.startsWith('assets/') && !imgUrl.startsWith('/')) {
+            imgUrl = `assets/HouseImg/${imgUrl}`;
+        }
+
+        this.currentMainImage = imgUrl;
     }
 }

@@ -1,20 +1,36 @@
 <div class="travel-time-modal">
     <div class="modal-content">
         <div class="modal-header">
-            <h2>Check Travel & Local Time 🚌</h2>
+            <h2>Plan Your Trip 🚌</h2>
             <button class="close-btn" (click)="closeModal()">&times;</button>
         </div>
 
         <div class="modal-body">
-            <p class="description">Enter your destination to find the next bus and current local time.</p>
+            <p class="description">Enter your route to check the next bus schedule and travel duration.</p>
 
             <div class="input-group">
-                <input type="text" [(ngModel)]="destination" placeholder="Enter destination (e.g., Pune Central)"
+                <input type="text" [(ngModel)]="source" placeholder="From: Current Location" (input)="onSourceInput()"
                     (keyup.enter)="checkTime()" />
                 <span class="input-icon">📍</span>
+                <ul class="suggestions" *ngIf="sourceSuggestions.length > 0">
+                    <li *ngFor="let place of sourceSuggestions" (click)="selectPlace(place, 'source')">
+                        {{ place }}
+                    </li>
+                </ul>
             </div>
 
-            <button class="check-btn" [disabled]="!destination || isLoading" (click)="checkTime()">
+            <div class="input-group">
+                <input type="text" [(ngModel)]="destination" placeholder="To: Destination" (input)="onDestInput()"
+                    (keyup.enter)="checkTime()" />
+                <span class="input-icon">🏁</span>
+                <ul class="suggestions" *ngIf="destinationSuggestions.length > 0">
+                    <li *ngFor="let place of destinationSuggestions" (click)="selectPlace(place, 'destination')">
+                        {{ place }}
+                    </li>
+                </ul>
+            </div>
+
+            <button class="check-btn" [disabled]="!destination || !source || isLoading" (click)="checkTime()">
                 <span *ngIf="!isLoading">Check Schedule</span>
                 <span *ngIf="isLoading" class="loader"></span>
             </button>
@@ -25,6 +41,14 @@
                     <div class="info">
                         <span class="label">Next Bus</span>
                         <span class="value">{{ result!.busTime }}</span>
+                    </div>
+                </div>
+
+                <div class="result-card duration">
+                    <div class="icon">⏳</div>
+                    <div class="info">
+                        <span class="label">Duration</span>
+                        <span class="value">{{ result!.duration }}</span>
                     </div>
                 </div>
 

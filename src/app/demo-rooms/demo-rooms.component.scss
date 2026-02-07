@@ -172,63 +172,46 @@ $rating-color: #FFA41C;
 }
 
 
-// --- Details Modal Styles ---
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.6);
-    z-index: 2000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    backdrop-filter: blur(4px);
-}
+// Loading & Error States
+.loading-state,
+.error-state {
+    text-align: center;
+    padding: 3rem;
+    color: #666;
+    font-size: 1.1rem;
 
-.modal-content {
-    background: white;
-    width: 90%;
-    max-width: 1000px;
-    height: 85vh;
-    border-radius: 8px;
-    position: relative;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    animation: slideUp 0.3s ease-out;
+    .spinner {
+        width: 40px;
+        height: 40px;
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid $primary-color;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 1rem;
+    }
 
-    @media (min-width: 768px) {
-        flex-direction: row; // Split view on desktop
-        overflow: hidden; // Scroll inside body if needed
+    .retry-btn {
+        margin-top: 1rem;
+        padding: 0.5rem 1.5rem;
+        background: $primary-color;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+
+        &:hover {
+            background-color: darken($primary-color, 10%);
+        }
     }
 }
 
-.close-btn {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 2rem;
-    background: none;
-    border: none;
-    cursor: pointer;
-    z-index: 10;
-    color: #555;
-
-    &:hover {
-        color: black;
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
     }
-}
 
-.modal-body {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 100%;
-
-    @media (min-width: 768px) {
-        flex-direction: row;
+    100% {
+        transform: rotate(360deg);
     }
 }
 
@@ -236,16 +219,57 @@ $rating-color: #FFA41C;
     flex: 1.2;
     background: #f5f5f5;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 2rem;
+    gap: 1rem;
 
     .modal-main-image {
         max-width: 100%;
-        max-height: 100%;
+        max-height: 400px;
         object-fit: contain;
         border-radius: 4px;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        flex-grow: 1;
+    }
+
+    .image-gallery {
+        display: flex;
+        gap: 10px;
+        overflow-x: auto;
+        padding: 5px;
+        width: 100%;
+        justify-content: center;
+
+        .thumb {
+            width: 70px;
+            height: 50px;
+            flex-shrink: 0;
+            cursor: pointer;
+            border-radius: 4px;
+            overflow: hidden;
+            border: 2px solid transparent;
+            opacity: 0.7;
+            transition: all 0.2s;
+            background: white;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            &:hover {
+                opacity: 1;
+                transform: translateY(-2px);
+            }
+
+            &.active {
+                opacity: 1;
+                border-color: $primary-color;
+            }
+        }
     }
 }
 
@@ -325,6 +349,10 @@ $rating-color: #FFA41C;
         h3 {
             margin-bottom: 0.5rem;
             font-size: 1.2rem;
+
+            &.mt-4 {
+                margin-top: 1.5rem;
+            }
         }
 
         p {
