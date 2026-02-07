@@ -12,28 +12,35 @@ import { LoginComponent } from '../login/login.component';
 })
 export class HeaderComponent {
     isMobileMenuOpen = false;
-    isOwnerLoggedIn = false;
     showLogin = false;
+    currentUser: any = null;
+    showProfileMenu = false;
 
     toggleMobileMenu() {
         this.isMobileMenuOpen = !this.isMobileMenuOpen;
     }
 
-    // Mock login for demonstration
-    login() {
-        this.isOwnerLoggedIn = true;
-    }
-
-    logout() {
-        this.isOwnerLoggedIn = false;
-    }
-
     openLogin() {
         this.showLogin = true;
-        this.isMobileMenuOpen = false; // Close mobile menu if open
+        this.isMobileMenuOpen = false;
     }
 
     closeLogin() {
         this.showLogin = false;
+    }
+
+    onLoginSuccess(user: any) {
+        this.currentUser = user;
+        this.showLogin = false; // Close modal
+    }
+
+    toggleProfileMenu() {
+        this.showProfileMenu = !this.showProfileMenu;
+    }
+
+    logout() {
+        this.currentUser = null;
+        this.showProfileMenu = false;
+        this.isMobileMenuOpen = false;
     }
 }

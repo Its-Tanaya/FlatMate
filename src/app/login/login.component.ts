@@ -13,9 +13,11 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent {
     @Output() close = new EventEmitter<void>();
+    @Output() loginSuccess = new EventEmitter<any>();
     loginForm: FormGroup;
     errorMessage: string = '';
     successMessage: string = '';
+    isLoading: boolean = false;
 
     constructor(
         private fb: FormBuilder,
@@ -32,6 +34,10 @@ export class LoginComponent {
 
     onSubmit() {
         if (this.loginForm.valid) {
+            this.isLoading = true;
+            this.errorMessage = '';
+            this.successMessage = '';
+
             const loginData = this.loginForm.value;
             const payload = {
                 firstName: loginData.fname,
@@ -44,16 +50,20 @@ export class LoginComponent {
                 .subscribe({
                     next: (response: any) => {
                         console.log('Login successful', response);
+                        this.isLoading = false;
                         this.successMessage = 'Login successful!';
-                        this.errorMessage = '';
-                        // Close modal after short delay or immediately?
-                        // For now, let's keep it open to show success message, or maybe close it.
-                        // this.onClose(); 
+                        // Emit success event with response data (or mock data if response is empty)
+                        this.loginSuccess.emit(response || { name: loginData.fname });
+
+                        // Close modal after a brief delay to show success message
+                        setTimeout(() => {
+                            this.onClose();
+                        }, 1000);
                     },
                     error: (error) => {
                         console.error('Login failed', error);
+                        this.isLoading = false;
                         this.errorMessage = 'Login failed. Please check your credentials and try again.';
-                        this.successMessage = '';
                     }
                 });
         } else {

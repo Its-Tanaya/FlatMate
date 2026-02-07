@@ -46,7 +46,9 @@
         {{ successMessage }}
       </div>
 
-      <button type="submit" [disabled]="loginForm.invalid">Login</button>
+      <button type="submit" [disabled]="loginForm.invalid || isLoading">
+        {{ isLoading ? 'Logging in...' : 'Login' }}
+      </button>
     </form>
   </div>
 </div>

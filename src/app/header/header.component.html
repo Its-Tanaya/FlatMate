@@ -8,17 +8,19 @@
 
         <!-- Desktop Actions -->
         <div class="actions">
-            <a (click)="openLogin()" class="nav-link user-login" style="cursor: pointer;">User Login</a>
+            <a *ngIf="!currentUser" (click)="openLogin()" class="nav-link user-login" style="cursor: pointer;">User
+                Login</a>
 
-            <ng-container *ngIf="!isOwnerLoggedIn; else ownerDashboard">
-                <button class="btn btn-owner-login" (click)="login()">Owner Login</button>
+            <div *ngIf="currentUser" class="profile-container" (clickOutside)="showProfileMenu = false">
+                <div class="profile-circle" (click)="toggleProfileMenu()">
+                    {{ currentUser.firstName ? currentUser.firstName.charAt(0).toUpperCase() : 'U' }}
+                </div>
 
-            </ng-container>
-
-            <ng-template #ownerDashboard>
-                <button class="btn btn-dashboard">Dashboard</button>
-                <button class="btn btn-logout" (click)="logout()">Logout</button>
-            </ng-template>
+                <div class="dropdown-menu" *ngIf="showProfileMenu">
+                    <div class="dropdown-item">Register your room</div>
+                    <div class="dropdown-item" (click)="logout()">Logout</div>
+                </div>
+            </div>
         </div>
 
         <!-- Mobile Menu Button -->
@@ -35,17 +37,7 @@
 
         <a (click)="openLogin()" class="mobile-link" (click)="toggleMobileMenu()" style="cursor: pointer;">User
             Login</a>
-
-        <ng-container *ngIf="!isOwnerLoggedIn; else mobileOwnerDashboard">
-            <button class="btn btn-owner-login" (click)="login(); toggleMobileMenu()">Owner Login</button>
-
-        </ng-container>
-
-        <ng-template #mobileOwnerDashboard>
-            <button class="btn btn-dashboard" (click)="toggleMobileMenu()">Dashboard</button>
-            <button class="btn btn-logout" (click)="logout(); toggleMobileMenu()">Logout</button>
-        </ng-template>
     </div>
 
-    <app-login *ngIf="showLogin" (close)="closeLogin()"></app-login>
+    <app-login *ngIf="showLogin" (close)="closeLogin()" (loginSuccess)="onLoginSuccess($event)"></app-login>
 </header>
