@@ -70,7 +70,8 @@
               "buildTarget": "FlatMate:build:production"
             },
             "development": {
-              "buildTarget": "FlatMate:build:development"
+              "buildTarget": "FlatMate:build:development",
+              "proxyConfig": "src/proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"
