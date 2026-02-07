@@ -1,0 +1,49 @@
+<!-- Floating Robot Button -->
+<div class="chatbot-container" [class.open]="isOpen">
+    <div class="robot-float" (click)="toggleChat()">
+        <div class="robot-face">
+            <div class="eyes">
+                <div class="eye left"></div>
+                <div class="eye right"></div>
+            </div>
+            <div class="mouth"></div>
+        </div>
+        <div class="pulse-ring"></div>
+    </div>
+
+    <!-- Chat Window -->
+    <div class="chat-window" [class.visible]="isOpen">
+        <div class="chat-header">
+            <div class="header-info">
+                <span class="bot-avatar">🤖</span>
+                <span class="bot-name">FlatMate AI</span>
+            </div>
+            <button class="close-chat" (click)="toggleChat()">&times;</button>
+        </div>
+
+        <div class="chat-body" #scrollContainer>
+            <div *ngFor="let msg of messages" class="message" [class.user]="msg.sender === 'user'"
+                [class.bot]="msg.sender === 'bot'">
+                <div class="message-content">{{ msg.text }}</div>
+            </div>
+
+            <div *ngIf="isTyping" class="typing-indicator">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <div class="quick-replies" *ngIf="messages.length < 3 && !isTyping">
+                <button *ngFor="let reply of quickReplies" (click)="handleQuickReply(reply)">
+                    {{ reply }}
+                </button>
+            </div>
+        </div>
+
+        <div class="chat-input-area">
+            <input type="text" placeholder="Type a message..." [(ngModel)]="userMessage" (keyup.enter)="sendMessage()"
+                [disabled]="isTyping">
+            <button class="btn-send" (click)="sendMessage()" [disabled]="!userMessage.trim() || isTyping">➤</button>
+        </div>
+    </div>
+</div>

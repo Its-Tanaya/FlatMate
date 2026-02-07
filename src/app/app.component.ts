@@ -5,11 +5,12 @@ import { HeroComponent } from './hero/hero.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { DemoRoomsComponent } from './demo-rooms/demo-rooms.component';
 import { FooterComponent } from './footer/footer.component';
+import { ChatbotComponent } from './chatbot/chatbot.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent, HeroComponent, NavBarComponent, DemoRoomsComponent, FooterComponent],
+  imports: [RouterOutlet, HeaderComponent, HeroComponent, NavBarComponent, DemoRoomsComponent, FooterComponent, ChatbotComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
