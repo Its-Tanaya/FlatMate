@@ -8,6 +8,7 @@
         <nav class="desktop-nav">
             <a href="#" class="nav-link">Home</a>
             <a href="#" class="nav-link">Find Room</a>
+            <a (click)="openTravelTime()" style="cursor: pointer;" class="nav-link">Check Bus Time</a>
             <a href="#" class="nav-link">About Us</a>
         </nav>
 
@@ -40,6 +41,7 @@
     <div class="mobile-menu" [class.open]="isMobileMenuOpen">
         <a href="#" class="mobile-link" (click)="toggleMobileMenu()">Home</a>
         <a href="#" class="mobile-link" (click)="toggleMobileMenu()">Find Room</a>
+        <a (click)="openTravelTime()" class="mobile-link" style="cursor: pointer;">Check Bus Time</a>
         <a href="#" class="mobile-link" (click)="toggleMobileMenu()">About Us</a>
         <div class="mobile-divider"></div>
 
@@ -50,4 +52,5 @@
 
     <app-login *ngIf="showLogin" (close)="closeLogin()" (loginSuccess)="onLoginSuccess($event)"></app-login>
     <app-register-room *ngIf="showRegisterRoom" (close)="closeRegisterRoom()"></app-register-room>
+    <app-travel-time *ngIf="showTravelTime" (close)="closeTravelTime()"></app-travel-time>
 </header>

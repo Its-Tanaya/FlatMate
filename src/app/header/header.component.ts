@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { LoginComponent } from '../login/login.component';
 import { RegisterRoomComponent } from '../register-room/register-room.component';
+import { TravelTimeComponent } from '../travel-time/travel-time.component';
 
 @Component({
     selector: 'app-header',
     standalone: true,
-    imports: [CommonModule, RouterModule, LoginComponent, RegisterRoomComponent],
+    imports: [CommonModule, RouterModule, LoginComponent, RegisterRoomComponent, TravelTimeComponent],
     templateUrl: './header.component.html',
     styleUrl: './header.component.scss'
 })
@@ -15,6 +16,7 @@ export class HeaderComponent {
     isMobileMenuOpen = false;
     showLogin = false;
     showRegisterRoom = false;
+    showTravelTime = false;
     currentUser: any = null;
     showProfileMenu = false;
 
@@ -49,6 +51,15 @@ export class HeaderComponent {
 
     closeRegisterRoom() {
         this.showRegisterRoom = false;
+    }
+
+    openTravelTime() {
+        this.showTravelTime = true;
+        this.isMobileMenuOpen = false;
+    }
+
+    closeTravelTime() {
+        this.showTravelTime = false;
     }
 
     logout() {

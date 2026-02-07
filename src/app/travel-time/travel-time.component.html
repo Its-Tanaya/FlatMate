@@ -1,0 +1,41 @@
+<div class="travel-time-modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Check Travel & Local Time 🚌</h2>
+            <button class="close-btn" (click)="closeModal()">&times;</button>
+        </div>
+
+        <div class="modal-body">
+            <p class="description">Enter your destination to find the next bus and current local time.</p>
+
+            <div class="input-group">
+                <input type="text" [(ngModel)]="destination" placeholder="Enter destination (e.g., Pune Central)"
+                    (keyup.enter)="checkTime()" />
+                <span class="input-icon">📍</span>
+            </div>
+
+            <button class="check-btn" [disabled]="!destination || isLoading" (click)="checkTime()">
+                <span *ngIf="!isLoading">Check Schedule</span>
+                <span *ngIf="isLoading" class="loader"></span>
+            </button>
+
+            <div class="result-container" *ngIf="result && !isLoading">
+                <div class="result-card bus">
+                    <div class="icon">🚌</div>
+                    <div class="info">
+                        <span class="label">Next Bus</span>
+                        <span class="value">{{ result!.busTime }}</span>
+                    </div>
+                </div>
+
+                <div class="result-card time">
+                    <div class="icon">🕒</div>
+                    <div class="info">
+                        <span class="label">Local Time</span>
+                        <span class="value">{{ result!.localTime }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
