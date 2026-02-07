@@ -1,0 +1,10 @@
+<section class="demo-rooms-section">
+    <div class="container">
+        <div class="cards-wrapper">
+            <div *ngFor="let room of demoRooms" class="room-card" [style.animation-delay]="room.id * 0.2 + 's'">
+                <img [src]="room.imageUrl" [alt]="room.title" class="room-image">
+                <div class="card-overlay"></div>
+            </div>
+        </div>
+    </div>
+</section>
