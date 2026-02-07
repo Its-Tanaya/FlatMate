@@ -2,9 +2,11 @@
     <div class="modal-card" (click)="$event.stopPropagation()">
         <button class="close-btn" (click)="onClose()">&times;</button>
 
-        <h2>Register Your Room</h2>
+        <h2 *ngIf="currentStep === 1">Register Owner (Step 1/2)</h2>
+        <h2 *ngIf="currentStep === 2">Room Details (Step 2/2)</h2>
 
-        <form [formGroup]="registerForm" (ngSubmit)="onStep2Verification()">
+        <!-- Step 1: Owner Registration -->
+        <form *ngIf="currentStep === 1" [formGroup]="registerForm" (ngSubmit)="onStep1Submit()">
             <div class="form-row">
                 <div class="form-group">
                     <label for="firstName">First Name</label>
@@ -102,7 +104,124 @@
                 </div>
             </div>
 
-            <button type="submit" [disabled]="registerForm.invalid">Step 2 Verification</button>
+            <button type="submit" [disabled]="registerForm.invalid || isLoading">
+                {{ isLoading ? 'Processing...' : 'Step 2 Verification' }}
+            </button>
         </form>
+
+        <!-- Step 2: Room Details -->
+        <form *ngIf="currentStep === 2" [formGroup]="roomForm" (ngSubmit)="onStep2Submit()">
+            <div class="form-group">
+                <label for="houseAddress">House Address</label>
+                <textarea id="houseAddress" formControlName="houseAddress" placeholder="Full address"
+                    rows="2"></textarea>
+                <div class="error-text"
+                    *ngIf="roomForm.get('houseAddress')?.invalid && roomForm.get('houseAddress')?.touched">
+                    Address is required.
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="pinCode">Pin Code</label>
+                    <input id="pinCode" type="text" formControlName="pinCode" placeholder="6-digit Pin Code">
+                </div>
+                <div class="form-group">
+                    <label for="price">Price (₹)</label>
+                    <input id="price" type="number" formControlName="price" placeholder="Monthly Rent">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="houseType">House Type</label>
+                    <select id="houseType" formControlName="houseType">
+                        <option value="">Select Type</option>
+                        <option value="1-BHK">1-BHK</option>
+                        <option value="2-BHK">2-BHK</option>
+                        <option value="3-BHK">3-BHK</option>
+                        <option value="Villa">Villa</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="roomType">Room Type</label>
+                    <select id="roomType" formControlName="roomType">
+                        <option value="">Select Type</option>
+                        <option value="AC">AC</option>
+                        <option value="Non-AC">Non-AC</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="roomSharingType">Sharing Type</label>
+                    <select id="roomSharingType" formControlName="roomSharingType">
+                        <option value="">Select Sharing</option>
+                        <option value="Single">Single</option>
+                        <option value="Double">Double</option>
+                        <option value="Triple">Triple</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="furnishingType">Furnishing</label>
+                    <select id="furnishingType" formControlName="furnishingType">
+                        <option value="">Select Furnishing</option>
+                        <option value="Fully Furnished">Fully Furnished</option>
+                        <option value="Semi Furnished">Semi Furnished</option>
+                        <option value="Unfurnished">Unfurnished</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea id="description" formControlName="description" placeholder="Describe the room"
+                    rows="2"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="nearbyPlaces">Nearby Places</label>
+                <input id="nearbyPlaces" type="text" formControlName="nearbyPlaces"
+                    placeholder="Metro, Station, Market...">
+            </div>
+
+            <div class="form-group">
+                <label for="rulesAndBenefits">Rules & Benefits</label>
+                <textarea id="rulesAndBenefits" formControlName="rulesAndBenefits"
+                    placeholder="No smoking, WiFi included..." rows="2"></textarea>
+            </div>
+
+            <!-- Image Upload Section -->
+            <div class="form-group">
+                <label>Upload Room Images</label>
+                <input type="file" (change)="onFileSelected($event)" accept="image/*" class="file-input">
+                <small class="hint">Selected image will be uploaded to assets/HouseImg</small>
+            </div>
+
+            <!-- Image URLs Array -->
+            <div class="form-group">
+                <label>Image URLs (Uploaded or Manual)</label>
+                <div formArrayName="imageUrls">
+                    <div *ngFor="let control of imageUrlControls; let i = index" [formGroupName]="i" class="image-row">
+                        <input type="text" formControlName="url" placeholder="Starts with assets/HouseImg/..." readonly>
+                        <button type="button" class="remove-btn" (click)="removeImageUrl(i)"
+                            *ngIf="imageUrlControls.length > 1">&times;</button>
+                    </div>
+                </div>
+                <!-- <button type="button" class="add-btn" (click)="addImageUrl()">+ Add URL Manually</button> -->
+            </div>
+
+            <button type="submit" [disabled]="roomForm.invalid || isLoading">
+                {{ isLoading ? 'Registering...' : 'Register Room' }}
+            </button>
+        </form>
+
+        <div *ngIf="errorMessage" class="error-message">
+            {{ errorMessage }}
+        </div>
+        <div *ngIf="successMessage" class="success-message">
+            {{ successMessage }}
+        </div>
     </div>
 </div>
