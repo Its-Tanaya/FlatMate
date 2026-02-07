@@ -1,11 +1,76 @@
 <section class="demo-rooms-section">
     <div class="container">
-        <div class="cards-wrapper">
-            <div *ngFor="let room of demoRooms" class="room-card" [style.animation-delay]="room.id * 0.2 + 's'">
-                <img [src]="room.imageUrl" [alt]="room.title" class="room-image">
-                <div class="card-overlay"></div>
+        <h2 class="section-title">Recommended for You</h2>
+        <div class="product-grid">
+            <div *ngFor="let room of demoRooms" class="product-card" (click)="openDetails(room)">
+                <div class="image-container">
+                    <img [src]="room.imageUrl" [alt]="room.title" class="product-image">
+                    <span *ngIf="room.verified" class="badge-verified">Verified</span>
+                </div>
+                <div class="product-details">
+                    <h3 class="product-title">{{ room.title }}</h3>
+                    <div class="product-rating">
+                        <span class="stars">★★★★☆</span>
+                        <span class="rating-count">{{ room.reviews }}</span>
+                    </div>
+                    <div class="product-price">
+                        <span class="currency">₹</span>
+                        <span class="amount">{{ room.price | number }}</span>
+                        <span class="period">/mo</span>
+                    </div>
+                    <div class="product-meta">
+                        <span class="meta-item">{{ room.type }}</span> •
+                        <span class="meta-item">{{ room.furnishing }}</span>
+                    </div>
+                    <p class="product-location">📍 {{ room.location }}</p>
+                    <p class="delivery-info">Available immediately</p>
+                    <button class="btn-view-details">See Details</button>
+                </div>
             </div>
         </div>
-        <p class="demo-caption">Sample room images for demonstration purposes</p>
     </div>
 </section>
+
+<!-- Details Modal -->
+<div class="modal-overlay" *ngIf="selectedRoom" (click)="closeDetails()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+        <button class="close-btn" (click)="closeDetails()">&times;</button>
+        <div class="modal-body">
+            <div class="modal-image-col">
+                <img [src]="selectedRoom.imageUrl" [alt]="selectedRoom.title" class="modal-main-image">
+            </div>
+            <div class="modal-info-col">
+                <h2 class="modal-title">{{ selectedRoom.title }}</h2>
+                <p class="modal-location">{{ selectedRoom.location }}</p>
+
+                <div class="modal-rating">
+                    <span class="stars">★★★★☆</span>
+                    <span>{{ selectedRoom.rating }} out of 5</span>
+                </div>
+
+                <div class="modal-price-box">
+                    <span class="modal-price">₹{{ selectedRoom.price | number }}</span>
+                    <span class="modal-period">per month</span>
+                </div>
+
+                <div class="detail-badges">
+                    <span class="badge">{{ selectedRoom.type }}</span>
+                    <span class="badge">{{ selectedRoom.furnishing }}</span>
+                    <span class="badge" *ngIf="selectedRoom.verified">Verified Owner</span>
+                </div>
+
+                <hr class="divider">
+
+                <div class="modal-description">
+                    <h3>About this place</h3>
+                    <p>{{ selectedRoom.description }}</p>
+                </div>
+
+                <div class="modal-actions">
+                    <button class="btn-contact">Contact Owner</button>
+                    <button class="btn-wishlist">Add to Wishlist</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

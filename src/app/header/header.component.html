@@ -4,7 +4,12 @@
             <span class="logo-text">FLATMATE</span>
         </div>
 
-
+        <!-- Desktop Navigation -->
+        <nav class="desktop-nav">
+            <a href="#" class="nav-link">Home</a>
+            <a href="#" class="nav-link">Find Room</a>
+            <a href="#" class="nav-link">About Us</a>
+        </nav>
 
         <!-- Desktop Actions -->
         <div class="actions">
@@ -33,9 +38,13 @@
 
     <!-- Mobile Menu -->
     <div class="mobile-menu" [class.open]="isMobileMenuOpen">
+        <a href="#" class="mobile-link" (click)="toggleMobileMenu()">Home</a>
+        <a href="#" class="mobile-link" (click)="toggleMobileMenu()">Find Room</a>
+        <a href="#" class="mobile-link" (click)="toggleMobileMenu()">About Us</a>
+        <div class="mobile-divider"></div>
 
-
-        <a (click)="openLogin()" class="mobile-link" (click)="toggleMobileMenu()" style="cursor: pointer;">User
+        <a *ngIf="!currentUser" (click)="openLogin()" class="mobile-link" (click)="toggleMobileMenu()"
+            style="cursor: pointer;">User
             Login</a>
     </div>
 
