@@ -1,0 +1,108 @@
+<div class="modal-overlay" (click)="onClose()">
+    <div class="modal-card" (click)="$event.stopPropagation()">
+        <button class="close-btn" (click)="onClose()">&times;</button>
+
+        <h2>Register Your Room</h2>
+
+        <form [formGroup]="registerForm" (ngSubmit)="onStep2Verification()">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="firstName">First Name</label>
+                    <input id="firstName" type="text" formControlName="firstName" placeholder="First Name">
+                    <div class="error-text"
+                        *ngIf="registerForm.get('firstName')?.invalid && registerForm.get('firstName')?.touched">
+                        First Name is required.
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="lastName">Last Name</label>
+                    <input id="lastName" type="text" formControlName="lastName" placeholder="Last Name">
+                    <div class="error-text"
+                        *ngIf="registerForm.get('lastName')?.invalid && registerForm.get('lastName')?.touched">
+                        Last Name is required.
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input id="email" type="email" formControlName="email" placeholder="Email Address">
+                <div class="error-text"
+                    *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+                    Valid Email is required.
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="contactNumber">Contact Number</label>
+                    <input id="contactNumber" type="text" formControlName="contactNumber"
+                        placeholder="10-digit Mobile Number">
+                    <div class="error-text"
+                        *ngIf="registerForm.get('contactNumber')?.invalid && registerForm.get('contactNumber')?.touched">
+                        Valid 10-digit number required.
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="aadharNumber">Aadhar Number</label>
+                    <input id="aadharNumber" type="text" formControlName="aadharNumber"
+                        placeholder="12-digit Aadhar Number">
+                    <div class="error-text"
+                        *ngIf="registerForm.get('aadharNumber')?.invalid && registerForm.get('aadharNumber')?.touched">
+                        Valid 12-digit Aadhar required.
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="gender">Gender</label>
+                    <select id="gender" formControlName="gender">
+                        <option value="">Select Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+                    <div class="error-text"
+                        *ngIf="registerForm.get('gender')?.invalid && registerForm.get('gender')?.touched">
+                        Gender is required.
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="religion">Religion</label>
+                    <select id="religion" formControlName="religion">
+                        <option value="">Select Religion</option>
+                        <option value="Hindu">Hindu</option>
+                        <option value="Muslim">Muslim</option>
+                        <option value="Christian">Christian</option>
+                        <option value="Sikh">Sikh</option>
+                        <option value="Other">Other</option>
+                    </select>
+                    <div class="error-text"
+                        *ngIf="registerForm.get('religion')?.invalid && registerForm.get('religion')?.touched">
+                        Religion is required.
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="maritalStatus">Marital Status</label>
+                <select id="maritalStatus" formControlName="maritalStatus">
+                    <option value="">Select Status</option>
+                    <option value="Single">Single</option>
+                    <option value="Married">Married</option>
+                    <option value="Divorced">Divorced</option>
+                </select>
+                <div class="error-text"
+                    *ngIf="registerForm.get('maritalStatus')?.invalid && registerForm.get('maritalStatus')?.touched">
+                    Marital Status is required.
+                </div>
+            </div>
+
+            <button type="submit" [disabled]="registerForm.invalid">Step 2 Verification</button>
+        </form>
+    </div>
+</div>

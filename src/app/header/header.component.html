@@ -17,7 +17,7 @@
                 </div>
 
                 <div class="dropdown-menu" *ngIf="showProfileMenu">
-                    <div class="dropdown-item">Register your room</div>
+                    <div class="dropdown-item" (click)="openRegisterRoom()">Register your room</div>
                     <div class="dropdown-item" (click)="logout()">Logout</div>
                 </div>
             </div>
@@ -40,4 +40,5 @@
     </div>
 
     <app-login *ngIf="showLogin" (close)="closeLogin()" (loginSuccess)="onLoginSuccess($event)"></app-login>
+    <app-register-room *ngIf="showRegisterRoom" (close)="closeRegisterRoom()"></app-register-room>
 </header>
