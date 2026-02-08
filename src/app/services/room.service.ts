@@ -18,6 +18,7 @@ export interface Room {
     description: string;
     imageUrls?: string[];
     createdAt?: string;
+    pjLocation?: string;
 
     // Optional UI fields (mapped or calculated)
     rating?: number;

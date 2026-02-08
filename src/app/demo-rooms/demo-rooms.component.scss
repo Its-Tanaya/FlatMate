@@ -24,6 +24,60 @@ $rating-color: #FFA41C;
     padding-left: 0.5rem;
 }
 
+
+
+.controls-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+
+    .sort-container {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+
+        label {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .select-wrapper {
+            position: relative;
+
+            select {
+                padding: 0.5rem 2rem 0.5rem 1rem;
+                border: 1px solid #ddd;
+                border-radius: 6px;
+                font-size: 0.95rem;
+                background-color: white;
+                cursor: pointer;
+                outline: none;
+                appearance: none;
+                background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+                background-repeat: no-repeat;
+                background-position: right 0.7rem center;
+                background-size: 1em;
+                min-width: 180px;
+
+                &:focus {
+                    border-color: $primary-color;
+                    box-shadow: 0 0 0 2px rgba($primary-color, 0.1);
+                }
+            }
+        }
+    }
+
+    .result-count {
+        color: #666;
+        font-size: 0.9rem;
+    }
+}
+
 .product-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); // Responsive grid

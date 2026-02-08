@@ -1,0 +1,31 @@
+<div class="modal-backdrop" *ngIf="isVisible" (click)="close()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+            <h3>{{ title }}</h3>
+            <button class="close-btn" (click)="close()">&times;</button>
+        </div>
+
+        <div class="modal-body">
+            <div class="room-list">
+                <div class="room-item" *ngFor="let room of rooms; let i = index">
+                    <div class="rank-badge">#{{ i + 1 }}</div>
+                    <div class="room-info">
+                        <h4>{{ room.houseType }} ({{ room.roomSharingType }})</h4>
+                        <div class="details">
+                            <span>₹{{ room.price | number }}</span>
+                            <span class="divider">|</span>
+                            <span>{{ room.roomType }}</span>
+                            <span class="divider">|</span>
+                            <span>{{ room.houseAddress }}</span>
+                        </div>
+                    </div>
+                    <button class="view-btn" (click)="viewRoom(room)">View</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button class="view-all-btn" (click)="onViewAll()">View Full List</button>
+        </div>
+    </div>
+</div>

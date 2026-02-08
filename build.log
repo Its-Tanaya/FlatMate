@@ -1,0 +1,33 @@
+
+> flat-mate@0.0.0 build
+> ng build
+
+- Building...
+
+Browser bundles        
+Initial chunk files     | Names               |  Raw size | Estimated transfer size
+main-I66JN6BA.js        | main                | 389.38 kB |                94.43 kB
+polyfills-FFHMD2TL.js   | polyfills           |  33.71 kB |                11.02 kB
+styles-5INURTSO.css     | styles              |   0 bytes |                 0 bytes
+
+                        | Initial total       | 423.09 kB |               105.45 kB
+
+
+Server bundles         
+Initial chunk files     | Names               |  Raw size
+server.mjs              | server              |   1.06 MB |                        
+chunk-6ABM5DN4.mjs      | -                   | 571.46 kB |                        
+polyfills.server.mjs    | polyfills.server    | 262.30 kB |                        
+chunk-36P6GAVD.mjs      | -                   | 131.79 kB |                        
+chunk-VVCT4QZE.mjs      | -                   |   2.48 kB |                        
+render-utils.server.mjs | render-utils.server |   1.44 kB |                        
+main.server.mjs         | main.server         | 149 bytes |                        
+
+Lazy chunk files        | Names               |  Raw size
+chunk-QZP2S7SI.mjs      | xhr2                |  11.79 kB |                        
+
+Prerendered 0 static routes.
+Output location: C:\Users\pramo\OneDrive\Desktop\UI\FlatMate\dist\flat-mate
+
+Application bundle generation complete. [16.819 seconds]
+

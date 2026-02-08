@@ -12,6 +12,22 @@
             <button (click)="fetchRooms()" class="retry-btn">Retry</button>
         </div>
 
+        <div class="controls-bar" *ngIf="!isLoading && !error">
+            <div class="sort-container">
+                <label for="sort-select">Sort By:</label>
+                <div class="select-wrapper">
+                    <select id="sort-select" [ngModel]="sortOption" (ngModelChange)="onSortChange($event)">
+                        <option value="default">Default</option>
+                        <option value="rent-low-high">Rent: Low to High</option>
+                        <option value="rent-high-low">Rent: High to Low</option>
+                        <option value="room-type">Room Type</option>
+                        <option value="recent">Recently Added</option>
+                    </select>
+                </div>
+            </div>
+            <span class="result-count">{{ demoRooms.length }} places found</span>
+        </div>
+
         <div class="product-grid" *ngIf="!isLoading && !error">
             <div *ngFor="let room of demoRooms" class="product-card" (click)="openDetails(room)">
                 <div class="image-container">
@@ -102,3 +118,7 @@
         </div>
     </div>
 </div>
+
+<app-top-five-modal [rooms]="topFiveRooms" [title]="modalTitle" [isVisible]="isModalVisible" (closeEvent)="closeModal()"
+    (viewAllEvent)="handleViewAll()" (viewRoomEvent)="handleViewRoom($event)">
+</app-top-five-modal>
